@@ -25,6 +25,16 @@ body {
 }
 
 /* Loader */
+.loader {
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 10;
+}
 
 /* Navigation */
 .navigation-container {
@@ -35,6 +45,7 @@ body {
 .navigation-items {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .background {
@@ -43,8 +54,26 @@ body {
   right: 0;
   width: 100%;
   height: 60px;
+  z-index: -1;
+}
+#bullet {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  background-color: aqua;
+  margin: 0 32px;
 }
 
+.clickable {
+  cursor: pointer;
+  color: darkorchid;
+  user-select: none;
+  background-color: aqua;
+  border-radius: 8px;
+  padding: 8px 24px;
+}
+.clickable:hover {
+}
 /* Images Container */
 .images-container {
   margin-top: 50px;
@@ -84,6 +113,9 @@ body {
 }
 
 /* Hidden */
+.hidden {
+  display: none;
+}
 
 /* Large Smartphone (Vertical) */
 @media screen and (max-width: 800px) {
