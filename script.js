@@ -5,6 +5,9 @@ const imagesContainer = document.querySelector(".images-container");
 const saveConfirmed = document.querySelector(".save-confirmed");
 const loader = document.querySelector(".loader");
 
+const resutlsTitle = document.getElementById("resutlsTitle");
+const favoritesTitle = document.getElementById("favoritesTitle");
+
 // NASA API
 const count = 8;
 const apiKey = "DEMO_KEY";
@@ -65,7 +68,11 @@ function createDOMNodes(page) {
   // Page´s title
   const pageTitle = document.createElement("h1");
   if (page === "results") {
+    resutlsTitle.hidden = false;
+    favoritesTitle.hidden = true;
   } else {
+    resutlsTitle.hidden = true;
+    favoritesTitle.hidden = false;
   }
   currentArray.forEach((element) => {
     // creating card element
