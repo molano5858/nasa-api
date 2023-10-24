@@ -1,3 +1,4 @@
+const generalContainer = document.getElementById("container");
 const resultsNav = document.getElementById("resultsNav");
 const favoritesNav = document.getElementById("favoriteNav");
 const imagesContainer = document.querySelector(".images-container");
@@ -5,7 +6,7 @@ const saveConfirmed = document.querySelector(".save-confirmed");
 const loader = document.querySelector(".loader");
 
 // NASA API
-const count = 4;
+const count = 8;
 const apiKey = "DEMO_KEY";
 const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
 
@@ -13,6 +14,23 @@ let resultsArray = [];
 let favorites = {};
 
 let pageToLoad = "";
+
+// loading function
+function loadingImages() {
+  loader.classList.remove("hidden");
+}
+// loading is complete
+function loadingIsComplete(page) {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (page === "results") {
+    resultsNav.classList.remove("hidden");
+    favoritesNav.classList.add("hidden");
+  } else {
+    resultsNav.classList.add("hidden");
+    favoritesNav.classList.remove("hidden");
+  }
+  loader.classList.add("hidden");
+}
 
 // Add to favorites function
 function saveFavorite(itemUrl) {
@@ -44,6 +62,11 @@ function createDOMNodes(page) {
     page === "results" ? resultsArray : Object.values(favorites);
   // Object.values because favorites is an object so then like this can use the forEach method
   console.log("current array", currentArray);
+  // Page´s title
+  const pageTitle = document.createElement("h1");
+  if (page === "results") {
+  } else {
+  }
   currentArray.forEach((element) => {
     // creating card element
     const card = document.createElement("div");
@@ -94,6 +117,7 @@ function createDOMNodes(page) {
     footerCardText.append(dateElement, copyRightCard);
     link.appendChild(image);
     card.append(link, cardBody);
+
     imagesContainer.appendChild(card);
   });
 }
@@ -108,14 +132,17 @@ function updateDOM(page) {
   // update images container to see changes when remove a favorite
   imagesContainer.textContent = "";
   createDOMNodes(page);
+  loadingIsComplete(page);
 }
 
 // get 10 pictures from NASA API
 async function getNasaPictures() {
+  // show loader
+  loadingImages();
   try {
     const response = await fetch(apiUrl);
     resultsArray = await response.json();
-    updateDOM("favorites");
+    updateDOM("results");
   } catch (error) {
     console.log(error);
   }

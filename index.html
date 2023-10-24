@@ -19,47 +19,28 @@
       <img src="./astronaut.svg" alt="Astronaut Loader animation" />
     </div>
     <!-- Container -->
-    <div class="container">
+    <div class="container" id="container">
       <!-- Navigation -->
       <div class="navigation-container">
         <span class="background hidden"></span>
         <!-- Results Nav -->
         <span class="navigation-items" id="resultsNav">
-          <h3 class="clickable">Favorites</h3>
+          <h3 class="clickable" onclick="updateDOM('favorites')">Favorites</h3>
           <span id="bullet"></span>
-          <h3 class="clickable">Load more</h3>
+          <h3 class="clickable" onclick="getNasaPictures()">Load more</h3>
         </span>
         <!-- Favorite Nav -->
         <span class="navigation-items hidden" id="favoriteNav">
-          <h3 class="clickable">Load more NASA Images</h3>
+          <h3 class="clickable" onclick="getNasaPictures()">
+            Load more NASA Images
+          </h3>
         </span>
       </div>
+      <!-- Page title -->
+      <h1 id="resutlsTitle">NASA ASTRONOMY PICTURE OF THE DAY</h1>
+      <h1 id="favoritesTitle" hidden>YOUR FAVORITES</h1>
       <!-- Images Container -->
-      <div class="images-container">
-        <div class="card">
-          <a href="" title="View full image" target="_blank">
-            <img
-              src="https://apod.nasa.gov/apod/image/2310/IoFlyby_Juno_2047.jpg"
-              alt="NASA images of the day"
-              class="img-card-top"
-            />
-          </a>
-          <div class="card-body">
-            <h5 class="card-title">Card Title</h5>
-            <p class="clickable2">Add to Favorite</p>
-            <p class="card-text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-              ullam sed a fugiat, aspernatur reiciendis, debitis culpa molestiae
-              facere cumque deserunt ex officiis iusto adipisci ratione esse non
-              dolorum nulla.
-            </p>
-            <small class="text-muted">
-              <strong>23-10-2023</strong>
-              <span>Copy Right info</span>
-            </small>
-          </div>
-        </div>
-      </div>
+      <div class="images-container"></div>
     </div>
     <!-- Save confirm -->
     <div class="save-confirmed" hidden>
