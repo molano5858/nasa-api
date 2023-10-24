@@ -1,5 +1,5 @@
 const resultsNav = document.getElementById("resultsNav");
-const favoritesNav = document.getElementById("favoritesNav");
+const favoritesNav = document.getElementById("favoriteNav");
 const imagesContainer = document.querySelector(".images-container");
 const saveConfirmed = document.querySelector(".save-confirmed");
 const loader = document.querySelector(".loader");
@@ -11,6 +11,8 @@ const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${co
 
 let resultsArray = [];
 let favorites = {};
+
+let pageToLoad = "";
 
 // Add to favorites function
 function saveFavorite(itemUrl) {
@@ -27,10 +29,19 @@ function saveFavorite(itemUrl) {
   });
 }
 
+// remove from localStorage
+function removeFavorite(itemUrl) {
+  if (favorites[itemUrl]) {
+    delete favorites[itemUrl];
+    localStorage.setItem("nasaFavorites", JSON.stringify(favorites));
+    updateDOM("favorites");
+  }
+}
+
 // create DOMNodes
 function createDOMNodes(page) {
   const currentArray =
-    page === "favorites" ? Object.values(favorites) : resultsArray;
+    page === "results" ? resultsArray : Object.values(favorites);
   // Object.values because favorites is an object so then like this can use the forEach method
   console.log("current array", currentArray);
   currentArray.forEach((element) => {
@@ -57,9 +68,14 @@ function createDOMNodes(page) {
     titleElement.classList.add("card-title");
     // Creagint add to favorites
     const addFavorite = document.createElement("p");
-    addFavorite.textContent = "Add to Favorite";
     addFavorite.classList.add("clickable2");
-    addFavorite.setAttribute("onclick", `saveFavorite('${element.url}')`);
+    if (page === "results") {
+      addFavorite.textContent = "Add to Favorites";
+      addFavorite.setAttribute("onclick", `saveFavorite('${element.url}')`);
+    } else {
+      addFavorite.textContent = "Remove from Favorites";
+      addFavorite.setAttribute("onclick", `removeFavorite('${element.url}')`);
+    }
     // Creating description
     const cardText = document.createElement("p");
     cardText.textContent = element.explanation;
@@ -89,6 +105,8 @@ function updateDOM(page) {
     favorites = JSON.parse(localStorage.getItem("nasaFavorites"));
     console.log(favorites);
   }
+  // update images container to see changes when remove a favorite
+  imagesContainer.textContent = "";
   createDOMNodes(page);
 }
 
@@ -107,5 +125,10 @@ getNasaPictures();
 
 // event listeners
 resultsNav.addEventListener("click", () => {
-  console.log(favorites);
+  pageToLoad = "results";
+  console.log(pageToLoad);
+});
+favoritesNav.addEventListener("click", () => {
+  pageToLoad = "favorites";
+  console.log(pageToLoad);
 });
